@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 20th Chelsea</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    :root {
+      --text: #4a3340;
+      --shadow: 0 18px 45px rgba(130, 92, 112, 0.14);
+      --pink-soft: #fff3f8;
+      --pink-main: #e8a8c2;
+      --pink-main-2: #d98eb0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(180deg, #fff9fc 0%, #fff3f8 100%);
+      color: var(--text);
+      position: relative;
+    }
+
+    .screen {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100vh;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: flex;
+      animation: fadeScreen 0.55s ease;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 760px;
+      max-height: calc(100vh - 36px);
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(231, 168, 193, 0.25);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      padding: 26px 24px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scrollbar-width: thin;
+      scrollbar-color: #dba2bc #fdf0f6;
+    }
+
+    .screen-intro .card {
+      max-width: 900px;
+      min-height: 560px;
+      padding: 42px 34px 38px;
+    }
+
+    .screen-intro .top-gif {
+      width: 190px;
+      height: 190px;
+      margin: 0 auto 18px;
+    }
+
+    .screen-intro h2 {
+      font-size: clamp(2.2rem, 4.5vw, 3rem);
+    }
+
+    .screen-intro .subtext {
+      max-width: 640px;
+      font-size: 1.06rem;
+    }
+
+    .card::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .card::-webkit-scrollbar-track {
+      background: #fdf0f6;
+      border-radius: 999px;
+    }
+
+    .card::-webkit-scrollbar-thumb {
+      background: #dba2bc;
+      border-radius: 999px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(244, 200, 216, 0.35), transparent 38%);
+      pointer-events: none;
+    }
+
+    .top-gif {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1, h2 {
+      color: #8f4c68;
+      line-height: 1.2;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.55rem);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(1.65rem, 3.5vw, 2rem);
+      margin-bottom: 12px;
+    }
+
+    p {
+      line-height: 1.75;
+      font-size: 0.98rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .subtext {
+      max-width: 560px;
+      margin: 0 auto 18px;
+      color: #6b5360;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 13px 24px;
+      font-size: 0.97rem;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-main-2));
+      color: white;
+      box-shadow: 0 12px 24px rgba(217, 142, 176, 0.28);
+    }
+
+    .btn-secondary {
+      background: var(--pink-soft);
+      color: #9a5d79;
+      border: 1px solid rgba(154, 93, 121, 0.15);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .password-box {
+      display: flex;
+      justify-content: center;
+      margin: 22px 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .password-display {
+      width: min(340px, 82vw);
+      padding: 18px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(154, 93, 121, 0.16);
+      background: white;
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 2px;
+      outline: none;
+      color: var(--text);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .password-display::placeholder {
+      letter-spacing: 1px;
+      color: #b493a3;
+    }
+
+    .clue {
+      color: #8a6576;
+      margin-bottom: 6px;
+    }
+
+    .keypad {
+      width: min(340px, 82vw);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .key {
+      border: none;
+      border-radius: 18px;
+      padding: 15px 10px;
+      font-size: 1.03rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #ffffff;
+      color: #7f5668;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.06);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .key:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .key:active {
+      transform: scale(0.98);
+    }
+
+    .key-action {
+      background: #fff1f6;
+      color: #a2617e;
+    }
+
+    .key-open {
+      background: linear-gradient(135deg, var(--pink-main), var(--pink-main-2));
+      color: white;
+    }
+
+    .error-text {
+      color: #c45d7c;
+      min-height: 22px;
+      font-size: 0.92rem;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .photo-frame {
+      width: min(320px, 78vw);
+      background: white;
+      border-radius: 22px;
+      padding: 14px;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.09);
+      margin: 20px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: clamp(260px, 42vh, 400px);
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .photo-caption {
+      margin-top: 10px;
+      font-size: 0.93rem;
+      color: #7b6170;
+    }
+
+    .letter {
+      text-align: center;
+      max-width: 620px;
+      margin: 20px auto 0;
+      background: rgba(255,255,255,0.72);
+      border-radius: 22px;
+      padding: 22px 20px;
+      line-height: 1.9;
+      box-shadow: inset 0 0 0 1px rgba(231,168,193,0.16);
+      position: relative;
+      z-index: 1;
+    }
+
+    .reveal-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(255,240,247,0.96) 100%);
+  overflow: hidden;
+}
+
+.reveal-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -30% -10%;
+  height: 220px;
+  background: radial-gradient(circle, rgba(232,168,194,0.28) 0%, rgba(232,168,194,0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.reveal-badge {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: #fff1f6;
+  color: #a35d7d;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.reveal-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 14px;
+}
+
+.reveal-subtext {
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 1.04rem;
+}
+
+.surprise-line {
+  font-size: 2rem;
+  letter-spacing: 10px;
+  color: #e3a2bc;
+  margin: 18px 0 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-surprise {
+  padding: 15px 30px;
+  font-size: 1rem;
+  animation: pulseSurprise 1.8s infinite;
+}
+
+@keyframes pulseSurprise {
+  0% { transform: scale(1); box-shadow: 0 12px 24px rgba(217, 142, 176, 0.22); }
+  50% { transform: scale(1.04); box-shadow: 0 18px 34px rgba(217, 142, 176, 0.34); }
+  100% { transform: scale(1); box-shadow: 0 12px 24px rgba(217, 142, 176, 0.22); }
+}
+
+    .playlist-box {
+      width: min(100%, 540px);
+      margin: 18px auto 0;
+      position: relative;
+      z-index: 1;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .playlist-box iframe {
+      display: block;
+      width: 100%;
+      height: 352px;
+      border: 0;
+      border-radius: 22px;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 16px;
+      opacity: 0.55;
+      animation: floatHeart linear forwards;
+      pointer-events: none;
+      z-index: 0;
+      will-change: transform, opacity;
+    }
+
+    .confetti-burst {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 18px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  animation: confettiBurst 1.8s ease-out forwards;
+}
+
+.party-center-pop {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 42px;
+  pointer-events: none;
+  z-index: 10000;
+  animation: centerPop 0.8s ease forwards;
+}
+
+@keyframes confettiBurst {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes centerPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.confetti-burst {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 24px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  animation: confettiBurst 2.2s cubic-bezier(0.15, 0.8, 0.2, 1) forwards;
+}
+
+.party-flash {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,215,230,0.7) 35%, rgba(255,215,230,0) 75%);
+  pointer-events: none;
+  z-index: 99998;
+  animation: flashBurst 0.6s ease-out forwards;
+}
+
+@keyframes confettiBurst {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(1080deg) scale(0.9);
+    opacity: 0;
+  }
+}
+
+@keyframes flashBurst {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(8);
+    opacity: 0;
+  }
+}
+
+    .confetti-piece {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 18px;
+  border-radius: 4px;
+  opacity: 0.95;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall linear forwards;
+}
+
+.party-pop {
+  position: fixed;
+  font-size: 34px;
+  pointer-events: none;
+  z-index: 10000;
+  animation: popBurst 0.9s ease forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes popBurst {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4) translateY(-20px);
+    opacity: 0;
+  }
+}
+
+    @keyframes fadeScreen {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatHeart {
+      to {
+        transform: translateY(-110vh) rotate(240deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .screen {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 22px 16px;
+        max-height: calc(100vh - 24px);
+      }
+
+      .screen-intro .card {
+        min-height: auto;
+        padding: 30px 18px 26px;
+      }
+
+      .screen-intro .top-gif {
+        width: 120px;
+        height: 120px;
+      }
+
+      .screen-intro h2 {
+        font-size: clamp(1.9rem, 7vw, 2.3rem);
+      }
+
+      .top-gif {
+        width: 92px;
+        height: 92px;
+      }
+
+      .photo-frame img {
+        height: 320px;
+      }
+
+      .playlist-box iframe {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="screen active" id="page-password">
+    <div class="card">
+      <img class="top-gif" src="Gif.gif" alt="Nailong gif" />
+      <h1>ada sesuatu enich buat nduttt</h1>
+      <p class="subtext">
+        sebelum masuk, isi dulu password kecil ini.
+      </p>
+      <p class="clue">clue: tanggal ulang tahun ayanggg</p>
+
+      <div class="password-box">
+        <input type="text" id="passwordInput" class="password-display" placeholder="DD-MM-YYYY" readonly />
+      </div>
+
+      <div class="keypad">
+        <button class="key" onclick="appendDigit('1')">1</button>
+        <button class="key" onclick="appendDigit('2')">2</button>
+        <button class="key" onclick="appendDigit('3')">3</button>
+        <button class="key" onclick="appendDigit('4')">4</button>
+        <button class="key" onclick="appendDigit('5')">5</button>
+        <button class="key" onclick="appendDigit('6')">6</button>
+        <button class="key" onclick="appendDigit('7')">7</button>
+        <button class="key" onclick="appendDigit('8')">8</button>
+        <button class="key" onclick="appendDigit('9')">9</button>
+        <button class="key key-action" onclick="clearPassword()">C</button>
+        <button class="key" onclick="appendDigit('0')">0</button>
+        <button class="key key-action" onclick="backspacePassword()">⌫</button>
+        <button class="key key-open" style="grid-column: span 3;" onclick="checkPassword()">buka</button>
+      </div>
+
+      <p class="error-text" id="passwordError"></p>
+    </div>
+  </section>
+
+  <section class="screen screen-intro" id="page-1">
+    <div class="card">
+      <img class="top-gif" src="Nailong.gif" alt="Nailong gif" />
+      <h2>selamat ulang tahun ke-20, Chelsea Widya Santoso</h2>
+      <p class="subtext">
+        ini versi kecil dari aku ndutt buat hal-hal yang pengen aku kasih ke ayangggg di hari spesial iniii.
+        maaff yachhh kalauu cuman sederhana, tapi aku pengen ndutt buka pelan-pelan sampai selesaii yachhh
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="nextPage('page-1', 'page-playlist')">lanjut</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="page-playlist">
+    <div class="card">
+      <img class="top-gif" src="Nailong-3.gif" alt="Nailong gif" />
+      <h2>ini playlist yang aku buat ayangggg</h2>
+      <p class="subtext">
+        maaf yaa kalau pilihan lagunya masih jelekkk hehehhe, play lagunya sambil lanjut inn bacaa webnyaa yaa sayangggg 😆😗😚😚
+      </p>
+      <div class="playlist-box">
+        <iframe
+          id="playlistMain"
+          src="https://open.spotify.com/embed/playlist/4Q8hG1Fmmesw9ZsXwQaoQw?utm_source=generator"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"></iframe>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-playlist', 'page-1')">kembali</button>
+        <button class="btn btn-primary" onclick="nextPage('page-playlist', 'page-2')">lanjut</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="page-2">
+    <div class="card">
+      <img class="top-gif" src="Nailong-1.gif" alt="Nailong gif" />
+      <h2>Foto yangg pertamaa inii aku jadiinn sebagai pembukaa di web iniii</h2>
+      <p class="subtext">
+        akuuu pilih foto ini di awal soalnyaa rasanya foto ini yang paling bikin aku inget gimana kita spend waktu bareng foto bareng banyakk" sebelum LDR.
+      </p>
+      <div class="photo-frame">
+        <img src="chelsea.jpeg" alt="Foto pertama Chelsea" />
+        <p class="photo-caption">foto terlucuuu sebelumm LDR meneyerang</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-2', 'page-playlist')">kembali</button>
+        <button class="btn btn-primary" onclick="nextPage('page-2', 'page-choice')">lanjut</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="page-choice">
+    <div class="card">
+      <img class="top-gif" src="Nailong-5.gif" alt="Nailong gif" />
+      <h2>mau lanjut lihat sisanya nggak sayanggggg?</h2>
+      <p class="subtext">
+        masih ada beberapa page lagi sii yang udahh aku siapin ndutt. kalau ayangggg mau lanjut, pencet lanjut. kalau nggak, yaa jangannn donggg plss :(
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-choice', 'page-no')">nggak dulu</button>
+        <button class="btn btn-primary" onclick="nextPage('page-choice', 'page-3')">lanjut</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="page-no">
+    <div class="card">
+      <img class="top-gif" src="Nailong-6.gif" alt="Nailong gif" />
+      <h2>yahh, masa nggak dilanjutin :(</h2>
+      <p class="subtext">
+        padahal aku udah nyiapin ini lowhhh ndutt buat ayangggg. lanjuttt yachh sayanggggg, aku tungguinn nduttt pencett di tombol sebelah kanan yaa inii yaaa yang tulisannya oke lanjuttt :D
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-no', 'page-choice')">balik</button>
+        <button class="btn btn-primary" onclick="nextPage('page-no', 'page-3')">oke lanjut</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="page-3">
+    <div class="card">
+      <img class="top-gif" src="Nailong-1.gif" alt="Nailong gif" />
+      <h2>foto yang ini juga aku suka</h2>
+      <p class="subtext">
+        foto ini takenya mungkin sama kek yang foto sebelumnya tapi vibenya menjadi pembedaa kita sehappy ituu ketika ndakk LDR yaa nduttt
+      </p>
+      <div class="photo-frame">
+        <img src="chelsea-1.jpeg" alt="Foto kedua Chelsea" />
+        <p class="photo-caption">tungguu akuu yaa kita ke malioboro lagi dan take foto di tempatt inii lagii</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-3', 'page-choice')">kembali</button>
+        <button class="btn btn-primary" onclick="nextPage('page-3', 'page-4')">lanjut</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="page-4">
+    <div class="card">
+      <img class="top-gif" src="Nailong-1.gif" alt="Nailong gif" />
+      <h2>kalau foto yang ini, vibe-nya kita banget si nduttt</h2>
+      <p class="subtext">
+        ini sii pertama kalii akuu diajak ayanggg photobooth yang sebagus ini dan se ter-worth it nduttt
+    </p>
+      <div class="photo-frame">
+        <img src="chelsea-2.jpeg" alt="Foto ketiga Chelsea" />
+        <p class="photo-caption">AYOOOO PHOTOBOOTH LAGIII CAYANGGGGGG 😆😆😆😆</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-4', 'page-3')">kembali</button>
+        <button class="btn btn-primary" onclick="nextPage('page-4', 'page-5')">lanjut</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="page-5">
+    <div class="card">
+      <img class="top-gif" src="Nailong-2.gif" alt="Nailong gif" />
+      <h2>dan foto yang ini cantikkk bangett ayanggg</h2>
+      <p class="subtext">
+        foto ayangggg yang ini aku taruh di terakhir karena ini foto sebelumm ayangggg umur 20 dan disini ayanggg cantikkkk bangettt 
+      </p>
+      <div class="photo-frame">
+        <img src="chelsea-3.jpeg" alt="Foto keempat Chelsea" />
+        <p class="photo-caption">dan ini jadi penutup urutan foto yang aku pilih di webbb kalii iniii.
+            eitss tapi tenang dulu masii ada halaman selanjutnya yang isinyaa rahasiaa dehhh cobaa tekann ajaaa yaaa :D
+        </p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-5', 'page-4')">kembali</button>
+        <button class="btn btn-primary" onclick="nextPage('page-5', 'page-reveal')">lanjut</button>
+      </div>
+    </div>
+  </section>
+
+    <section class="screen" id="page-reveal">
+    <div class="card reveal-card">
+        <img class="top-gif" src="Nailong-4.gif" alt="Nailong gif" />
+        <span class="reveal-badge">sebentar lagi sampai di bagian paling penting</span>
+        <h2 class="reveal-title">ini inti dari semua hal kecil yang aku siapin buat ayangggg</h2>
+        <p class="reveal-subtext">
+        dari awal aku memang pengin bagian terakhir ini jadi yang paling berasa.
+        jadi sebelum nduttt masuk, aku mau ayangggg tekan tombol ini pelan-pelan yaa.
+        </p>
+
+        <div class="surprise-line">✦ ✦ ✦</div>
+
+        <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-reveal', 'page-5')">kembali</button>
+        <button class="btn btn-primary btn-surprise" onclick="launchPartyAndNext()">buka pesan terakhir</button>
+        </div>
+    </div>
+    </section>
+
+  <section class="screen" id="page-6">
+    <div class="card">
+      <img class="top-gif" src="Nailong-4.gif" alt="Nailong gif" />
+      <h2>buat kamu, sayangggg</h2>
+      <p class="subtext">
+        selamat ulang tahun ke-20. semoga umur baru ini bawa lebih banyak hal baik, langkah yang lebih ringan, dan hati yang tetap tenang.
+      </p>
+      <div class="letter">
+        <p>
+          aku nggak mau bikin ini jadi terlalu ramai, jadi aku cuma mau bilang hal yang paling penting aja.
+          aku senang bisa kenal nduttt, jalan sama nduttt, dan sampai hari ini tetap punya ayanggg di hidupku.
+          terima kasih karena sudah jadi orang yang sabar, tulus, dan bisa nerima aku, dan bisa diajak tumbuh terus sama aku.
+        </p>
+        <br />
+        <p>
+          semoga di umur 20 ini kamu tetap jadi kesayangankuu yang paling aku kenal: kuat, lucu, manis, dan punya cara sendiri bikin semuanya terasa lebih baik di hubungan kita.
+          semoga banyak hal baik datang ke ndutt yaa, satu per satu, tanpa perlu buru-buru.
+        </p>
+        <br />
+        <p>
+          happy birthday, nduttt. i love u moreee sayangggg ❤️
+        </p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="nextPage('page-6', 'page-reveal')">kembali</button>
+        <button class="btn btn-primary" onclick="nextPage('page-6', 'page-1')">ulang dari awal</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const correctPassword = '03-04-2006';
+    let rawPassword = '';
+
+    function showOnly(pageId) {
+      const screens = document.querySelectorAll('.screen');
+      screens.forEach((screen) => screen.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+
+      document.querySelectorAll('.card').forEach((card) => {
+        card.scrollTop = 0;
+      });
+    }
+
+    function formatPassword(value) {
+      let formatted = value;
+      if (value.length > 2) {
+        formatted = value.slice(0, 2) + '-' + value.slice(2);
+      }
+      if (value.length > 4) {
+        formatted = value.slice(0, 2) + '-' + value.slice(2, 4) + '-' + value.slice(4);
+      }
+      return formatted;
+    }
+
+    function updatePasswordDisplay() {
+      document.getElementById('passwordInput').value = formatPassword(rawPassword);
+    }
+
+    function appendDigit(digit) {
+      if (rawPassword.length >= 8) return;
+      rawPassword += digit;
+      document.getElementById('passwordError').textContent = '';
+      updatePasswordDisplay();
+    }
+
+    function backspacePassword() {
+      rawPassword = rawPassword.slice(0, -1);
+      document.getElementById('passwordError').textContent = '';
+      updatePasswordDisplay();
+    }
+
+    function clearPassword() {
+      rawPassword = '';
+      document.getElementById('passwordError').textContent = '';
+      updatePasswordDisplay();
+    }
+
+    function checkPassword() {
+      const input = formatPassword(rawPassword);
+      const error = document.getElementById('passwordError');
+
+      if (input === correctPassword) {
+        error.textContent = '';
+        showOnly('page-1');
+      } else {
+        error.textContent = 'masih salah, coba ingat lagi tanggal penting kita ya.';
+      }
+    }
+
+    function nextPage(currentId, nextId) {
+      showOnly(nextId);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerHTML = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 6) + 's';
+      heart.style.fontSize = (Math.random() * 8 + 12) + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 9000);
+    }
+
+    function launchPartyAndNext() {
+  const colors = ['#f7a8c4', '#ffd166', '#7bdff2', '#b8f2e6', '#cdb4db', '#ff8fab'];
+
+  for (let i = 0; i < 100; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + 'vw';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDuration = (Math.random() * 1.8 + 2.2) + 's';
+    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(piece);
+
+    setTimeout(() => piece.remove(), 4500);
+  }
+
+  const leftPop = document.createElement('div');
+  leftPop.className = 'party-pop';
+  leftPop.innerHTML = '🎉';
+  leftPop.style.left = '18%';
+  leftPop.style.top = '42%';
+  document.body.appendChild(leftPop);
+
+  const rightPop = document.createElement('div');
+  rightPop.className = 'party-pop';
+  rightPop.innerHTML = '🎉';
+  rightPop.style.right = '18%';
+  rightPop.style.top = '42%';
+  document.body.appendChild(rightPop);
+
+  setTimeout(() => {
+    leftPop.remove();
+    rightPop.remove();
+  }, 1000);
+
+  setTimeout(() => {
+    nextPage('page-reveal', 'page-6');
+  }, 850);
+}
+
+function launchPartyAndNext() {
+  const colors = ['#f7a8c4', '#ffd166', '#7bdff2', '#b8f2e6', '#cdb4db', '#ff8fab'];
+  const total = 100;
+
+  for (let i = 0; i < total; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-burst';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    const angle = (Math.PI * 2 * i) / total;
+    const distance = 180 + Math.random() * 220;
+
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    piece.style.setProperty('--x', `${x}px`);
+    piece.style.setProperty('--y', `${y}px`);
+
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 2000);
+  }
+
+  const pop = document.createElement('div');
+  pop.className = 'party-center-pop';
+  pop.innerHTML = '🎉';
+  document.body.appendChild(pop);
+
+  setTimeout(() => pop.remove(), 900);
+
+  setTimeout(() => {
+    nextPage('page-reveal', 'page-6');
+  }, 850);
+}
+
+function launchPartyAndNext() {
+  const colors = ['#ff8fab', '#ffc6d9', '#ffd166', '#7bdff2', '#b8f2e6', '#cdb4db', '#ffffff'];
+  const total = 700; // makin besar makin penuh layar
+
+  const flash = document.createElement('div');
+  flash.className = 'party-flash';
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 700);
+
+  for (let i = 0; i < total; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-burst';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+    const angle = (Math.PI * 2 * i) / total;
+    const distance = 320 + Math.random() * 1000; // ini yang bikin nyebar sampai satu layar
+
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    piece.style.setProperty('--x', `${x}px`);
+    piece.style.setProperty('--y', `${y}px`);
+
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), 2400);
+  }
+
+  setTimeout(() => {
+    nextPage('page-reveal', 'page-6');
+  }, 950);
+}
+
+    setInterval(createHeart, 1200);
+  </script>
+</body>
+</html>
